@@ -3,7 +3,7 @@ import {
   ContentChild,
   ContentChildren,
   inject,
-  QueryList
+  QueryList,
 } from '@angular/core';
 import { PadInputDirective } from '@ui/form-field/directives/input.directive';
 import { PadLabelDirective } from '@ui/form-field/directives/label.directive';

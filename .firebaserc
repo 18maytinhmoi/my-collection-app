@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "my-collection-app-stg": {
+      "hosting": {
+        "my-collection-app": [
+          "my-collection-app-stg"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "my-collection-app-stg"
+  }
+}
