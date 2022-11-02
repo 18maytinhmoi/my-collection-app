@@ -5,9 +5,19 @@ import { LayoutComponent } from './containers/layout/layout.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'loading',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
     component: LayoutComponent,
     // canActivate: [AuthGuard],
     children: [],
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('../security/security.module').then(m => m.SecurityModule),
   },
 ];
 

@@ -16,8 +16,10 @@ export class PadFormWrapperComponent {
   @Input() public formGroup!: FormGroup;
   public readonly submitted$ = new BehaviorSubject(false);
 
+  // skip(1): don't emit the initial value
+
   // eslint-disable-next-line @angular-eslint/no-output-native
-  @Output() public readonly submit = this.submitted$.pipe(skip(1));
+  @Output() public readonly submitted = this.submitted$.pipe(skip(1));
   constructor() {}
 
   public onSubmit(): void {

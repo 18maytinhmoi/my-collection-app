@@ -1,0 +1,38 @@
+<pad-form-wrapper [formGroup]="signInForm" (submitted)="onSubmit()">
+  <pad-form-field>
+    <pad-label>Email address</pad-label>
+    <input
+      padInput
+      [formControl]="signInForm.controls.emailAddress"
+      class="w-96 h-12 border-2 border-[#DCE4EF] rounded-lg px-4"
+      type="text" />
+  </pad-form-field>
+
+  <pad-form-field>
+    <pad-label>Password</pad-label>
+    <input
+      padInput
+      [formControl]="signInForm.controls.password"
+      class="w-96 h-12 border-2 border-[#DCE4EF] rounded-lg px-4"
+      type="text" />
+  </pad-form-field>
+
+  <!-- <div class="flex flex-col gap-[0.3125rem]">
+    <p class="text-base leading-5 font-medium">Email address</p>
+    <input
+      [formControl]="signInform.controls.emailAddress"
+      class="w-96 h-12 border-2 border-[#DCE4EF] rounded-lg px-4"
+      type="text" />
+  </div>
+
+  <div class="flex flex-col gap-[0.3125rem]">
+    <p class="text-base leading-5 font-medium">Password</p>
+    <input
+      formControlName="password"
+      class="w-96 h-12 border-2 border-[#DCE4EF] rounded-lg px-4"
+      type="password" />
+  </div> -->
+  <button pad-button>Login</button>
+  <ng-container *ngIf="vm$ | async as vm"> </ng-container>
+</pad-form-wrapper>
+<!-- <button (click)="test()">test</button> -->
