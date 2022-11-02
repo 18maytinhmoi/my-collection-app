@@ -33,6 +33,8 @@
       type="password" />
   </div> -->
   <button pad-button>Login</button>
-  <ng-container *ngIf="vm$ | async as vm"> </ng-container>
+  <ng-container *ngIf="vm$ | async as vm">
+    {{ vm }}
+  </ng-container>
 </pad-form-wrapper>
 <!-- <button (click)="test()">test</button> -->
