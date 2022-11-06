@@ -1,41 +1,51 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs';
+import { UserApi } from '@core/api/user.api';
+import { Subscription, tap } from 'rxjs';
 
-import { AuthApi } from './auth.api';
 import { AuthState } from './auth.state';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  public allowPaths = ['sign-in', 'sign-up'];
+  private _getSubscription!: Subscription;
   constructor(
-    private readonly ngZone: NgZone,
-    private readonly router: Router,
-    private readonly auth: Auth,
-    private readonly authState: AuthState,
-    private readonly authApi: AuthApi
+    private readonly _ngZone: NgZone,
+    private readonly _router: Router,
+
+    private readonly _auth: Auth,
+    private readonly _authState: AuthState,
+    private readonly _userApi: UserApi
   ) {
-    onAuthStateChanged(this.auth, firebaseUser => {
+    onAuthStateChanged(this._auth, firebaseUser => {
       if (firebaseUser) {
-        this.authApi.getUserProfile(firebaseUser.uid).pipe(
-          tap(data => (this.authState.user = data)),
-          tap(() =>
-            this.ngZone.run(() => {
-              this.router.navigate(['overview']);
-            })
+        this._getSubscription = this._userApi
+          .get(firebaseUser.uid)
+          .pipe(
+            tap(data => (this._authState.user = data)),
+            tap(() =>
+              this._ngZone.run(() => {
+                this._router.navigate(['/']);
+              })
+            )
           )
-        );
+          .subscribe();
       } else {
-        this.clear();
+        const url = this._router.url;
+        if (!this.allowPaths.some(path => url.includes(path))) {
+          this.clear();
+        }
       }
     });
   }
 
   clear() {
-    this.authState.reset();
-    this.ngZone.run(() => {
-      this.router.navigate(['sign-in']);
+    this._getSubscription.unsubscribe();
+    this._authState.reset();
+    this._ngZone.run(() => {
+      this._router.navigate(['sign-in']);
     });
   }
 }

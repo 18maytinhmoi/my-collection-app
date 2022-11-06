@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserEntity } from '@core/models/user.entity';
+import { UserEntity } from '@core/models/entities/user.entity';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable()

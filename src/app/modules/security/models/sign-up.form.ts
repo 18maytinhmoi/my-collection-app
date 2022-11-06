@@ -9,7 +9,7 @@ export class SignUpForm {
 
   @IsNotEmpty()
   @IsEmail()
-  public readonly emailAddress!: string;
+  public readonly email!: string;
 
   @IsNotEmpty()
   @MinLength(6)

@@ -1,37 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
-import { doc, docData, Firestore, setDoc } from '@angular/fire/firestore';
-import { UserEntity } from '@core/models/user.entity';
-import { checkIfDataNull } from '@core/utils/rx/check-data-null';
-import { defer, from, map, Observable } from 'rxjs';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  UserCredential,
+} from '@angular/fire/auth';
+import { defer, from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthApi {
-  constructor(
-    private readonly _auth: Auth,
-    private readonly _store: Firestore
-  ) {}
+  constructor(private readonly _auth: Auth) {}
 
-  signIn(email: string, password: string) {
+  signIn(email: string, password: string): Observable<UserCredential> {
     const promise = signInWithEmailAndPassword(this._auth, email, password);
     return defer(() => from(promise));
   }
 
-  createUserProfile(uid: string, entity: UserEntity): Observable<UserEntity> {
-    const documentRef = doc(this._store, UserEntity.getPath(uid));
-    const promise = setDoc(documentRef, entity);
-    return defer(() => from(promise)).pipe(
-      map(data => new UserEntity(documentRef.id, data))
-    );
+  signUpWithEmail(email: string, password: string): Observable<UserCredential> {
+    const promise = createUserWithEmailAndPassword(this._auth, email, password);
+    return defer(() => from(promise));
   }
 
-  getUserProfile(uid: string): Observable<UserEntity> {
-    const documentRef = doc(this._store, UserEntity.getPath(uid));
-    return docData(documentRef).pipe(
-      checkIfDataNull('user profile null'),
-      map(data => new UserEntity(documentRef.id, data))
-    );
+  logout(): Observable<void> {
+    const promise = signOut(this._auth);
+    return defer(() => from(promise));
   }
 }

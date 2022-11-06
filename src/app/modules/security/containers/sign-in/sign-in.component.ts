@@ -34,22 +34,22 @@ export class SignInComponent implements OnInit {
   vm$!: Observable<string>;
 
   constructor(
-    private readonly securityFacade: SecurityFacade,
-    private readonly fb: FormBuilder
+    private readonly _securityFacade: SecurityFacade,
+    private readonly _fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.signInSub$ = new Subject<SignInForm>();
     this.vm$ = this.signInSub$.asObservable().pipe(
       filter(() => this.signInForm.valid),
-      mergeMap(dto => this.securityFacade.signIn(dto)),
+      mergeMap(dto => this._securityFacade.signIn(dto)),
       filter(data => data.status === ApiResponseStatus.Failure),
       map(data => data.error as string)
     );
 
     this.signInForm = addAsyncValidators(
-      this.fb.group<SignInForm>({
-        emailAddress: '',
+      this._fb.group<SignInForm>({
+        email: '',
         password: '',
       }),
       SignInForm

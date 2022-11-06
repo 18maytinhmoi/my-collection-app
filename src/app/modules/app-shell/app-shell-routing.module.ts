@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '@core/guards/auth.guard';
 import { LayoutComponent } from './containers/layout/layout.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'loading',
-    pathMatch: 'full',
-  },
+  // {
+  //   path: '',
+  //   redirectTo: 'loading',
+  //   pathMatch: 'full',
+  // },
   {
     path: '',
     component: LayoutComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [],
   },
   {

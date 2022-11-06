@@ -3,7 +3,7 @@ import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 export class SignInForm {
   @IsNotEmpty()
   @IsEmail()
-  public readonly emailAddress!: string;
+  public readonly email!: string;
 
   @IsNotEmpty()
   @MinLength(6)
