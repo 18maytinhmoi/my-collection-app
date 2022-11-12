@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { PadButtonModule } from './../../@ui/button/button.module';
+import { PadIconModule } from './../../@ui/icon/icon.module';
 import { AppShellRoutingModule } from './app-shell-routing.module';
 import { AppShellFacade } from './app-shell.facade';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -10,7 +11,12 @@ import { CollectionApi } from './services/collection.api';
 @NgModule({
   declarations: [LayoutComponent, SidebarComponent],
   providers: [AppShellFacade, CollectionApi],
-  imports: [CommonModule, AppShellRoutingModule, PadButtonModule],
+  imports: [
+    CommonModule,
+    AppShellRoutingModule,
+    PadIconModule.forRoot(),
+    PadButtonModule,
+  ],
   exports: [AppShellRoutingModule],
 })
 export class AppShellModule {}

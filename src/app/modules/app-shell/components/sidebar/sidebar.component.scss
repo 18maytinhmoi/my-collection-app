@@ -1,0 +1,19 @@
+* {
+  font-family: 'Inter',sans-serif
+}
+
+
+
+.active {
+  @apply opacity-100 bg-[#ebebeb];
+  pad-icon {
+    @apply stroke-black;
+  }
+  p {
+    @apply text-black;
+  }
+}
+
+.active div {
+  @apply opacity-100
+}
