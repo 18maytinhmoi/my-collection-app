@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { UserEntity } from '@core/models/entities/user.entity';
+import { ResettableSubject } from '@core/utils/rx/resettable-subject';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AuthState {
-  private readonly _userSubject: BehaviorSubject<UserEntity | null>;
+  private readonly _userSubject: ResettableSubject<UserEntity>;
   private readonly _loggedInSubject: BehaviorSubject<boolean>;
   constructor() {
-    this._userSubject = new BehaviorSubject<UserEntity | null>(null);
+    this._userSubject = new ResettableSubject<UserEntity>();
     this._loggedInSubject = new BehaviorSubject<boolean>(false);
   }
 
@@ -25,7 +26,7 @@ export class AuthState {
   }
 
   reset() {
-    this._userSubject.next(null);
+    this._userSubject.reset();
     this._loggedInSubject.next(false);
   }
 }

@@ -4,7 +4,7 @@ import {
   collectionData,
   doc,
   Firestore,
-  setDoc
+  setDoc,
 } from '@angular/fire/firestore';
 import { defer, from, map, Observable, take } from 'rxjs';
 import { CreateCollectionDto } from '../models/dto/collection.dto';
@@ -15,11 +15,8 @@ export class CollectionApi {
   constructor(private readonly _store: Firestore) {}
 
   getAll(uid: string): Observable<CollectionEntity[]> {
-    const collectionRef = collection(
-      this._store,
-      CollectionEntity.getPath(uid)
-    );
-    return collectionData(collectionRef).pipe(
+    const collectionRef = collection(this._store, CollectionEntity.getPath(uid));
+    return collectionData(collectionRef, { idField: 'id' }).pipe(
       map(data => data as CollectionEntity[]),
       map(data => data.map(item => new CollectionEntity(item.id, item))),
       take(1)

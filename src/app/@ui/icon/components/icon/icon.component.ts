@@ -5,7 +5,7 @@ import {
   Inject,
   Input,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
 } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
 
@@ -14,7 +14,7 @@ import {
   DEFAULT_CONFIG,
   GroupIconSizePropertyName,
   PadIconConfig,
-  PAD_ICON_CONFIG
+  PAD_ICON_CONFIG,
 } from '@ui/icon/type';
 
 @Component({
@@ -42,6 +42,7 @@ export class PadIconComponent implements OnChanges {
   constructor(
     private _elementRef: ElementRef<HTMLElement>,
     private _registry: PadIconRegistry,
+
     @Inject(PAD_ICON_CONFIG) customConfig: PadIconConfig
   ) {
     this._init = true;

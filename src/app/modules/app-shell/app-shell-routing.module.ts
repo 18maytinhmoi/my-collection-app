@@ -13,12 +13,17 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     canActivate: [AuthGuard],
-    children: [],
+    children: [
+      {
+        path: 'bookmark',
+        loadChildren: () =>
+          import('../bookmark/bookmark.module').then(m => m.BookmarkModule),
+      },
+    ],
   },
   {
     path: '',
-    loadChildren: () =>
-      import('../security/security.module').then(m => m.SecurityModule),
+    loadChildren: () => import('../security/security.module').then(m => m.SecurityModule),
   },
 ];
 

@@ -1,47 +1,84 @@
 import { Component, OnInit } from '@angular/core';
 import { UserEntity } from '@core/models/entities/user.entity';
-import { GroupIconSizePropertyName } from '@ui/icon/type';
-import { Observable } from 'rxjs';
+import { BaseComponent } from '@core/services/base.components';
+import { BehaviorSubject, combineLatest, map } from 'rxjs';
 import { AppShellFacade } from '../../app-shell.facade';
-import { CollectionEntity } from './../../models/entities/collection.entity';
+import { NavItem } from '../../models/type';
+
+type ViewModel = {
+  user: UserEntity | null;
+  navCollectionItems: NavItem[];
+  navItems: NavItem[];
+};
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent implements OnInit {
-  vm$!: Observable<UserEntity | null>;
-  collections$!: Observable<CollectionEntity[]>;
-
-  IconSize = GroupIconSizePropertyName;
-
-  list: {
-    icon: string;
-    text: string;
-  }[] = [
+export class SidebarComponent extends BaseComponent<ViewModel> implements OnInit {
+  list: NavItem[] = [
     {
-      icon: 'layers-three',
+      iconKey: 'layers-three',
       text: 'Inbox',
+      key: Symbol(),
+      active: false,
+      link: '',
     },
     {
-      icon: 'bell',
+      iconKey: 'bell',
       text: 'Activity',
+      key: Symbol(),
+      active: false,
+      link: '',
     },
     {
-      icon: 'settings',
+      iconKey: 'settings',
       text: 'Settings',
+      key: Symbol(),
+      active: false,
+      link: '',
     },
   ];
-  selectedItem: string | null = null;
-  constructor(private readonly appShellFacade: AppShellFacade) {}
-  ngOnInit(): void {
-    this.vm$ = this.appShellFacade.userProfile();
-    this.collections$ = this.appShellFacade.getCollections();
+  selectedItemKeySubject!: BehaviorSubject<string | symbol | undefined>;
+  constructor(private readonly appShellFacade: AppShellFacade) {
+    super();
   }
 
-  onSelect(index: string) {
-    this.selectedItem = index;
+  ngOnInit(): void {
+    this.selectedItemKeySubject = new BehaviorSubject<string | symbol | undefined>(
+      undefined
+    );
+
+    const user$ = this.appShellFacade
+      .userProfile()
+      .pipe(map(user => (vm: ViewModel) => ({ ...vm, user })));
+
+    const navCollectionItems$ = combineLatest([
+      this.selectedItemKeySubject.asObservable(),
+      this.appShellFacade.getCollections(),
+    ]).pipe(
+      map(([key, data]) => {
+        return data.map(item => ({
+          key: item.id,
+          text: item.name,
+          iconKey: item.iconKey,
+          link: `bookmark/${item.id}`,
+          active: item.id === key,
+        }));
+      }),
+      map(navCollectionItems => (vm: ViewModel) => ({ ...vm, navCollectionItems }))
+    );
+
+    this.initialize([user$, navCollectionItems$], {
+      user: null,
+      navCollectionItems: [],
+      navItems: this.list,
+    });
+  }
+
+  onNavItemClick(key: string | symbol) {
+    this.selectedItemKeySubject.next(key);
   }
 
   logout() {

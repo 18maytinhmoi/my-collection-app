@@ -5,14 +5,14 @@ import { CollectionDto } from '../dto/collection.dto';
 export class CollectionEntity extends BaseEntity {
   private readonly _id: string;
   name: string;
-  icon: string;
+  iconKey: string;
   color: string;
 
   constructor(id: string, data: CollectionDto) {
     super();
     this._id = id;
     this.name = data.name;
-    this.icon = data.icon;
+    this.iconKey = data.iconKey;
     this.color = data.color;
   }
   get id() {
