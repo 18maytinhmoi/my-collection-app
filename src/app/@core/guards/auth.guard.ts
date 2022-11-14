@@ -4,7 +4,7 @@ import {
   CanActivate,
   Router,
   RouterStateSnapshot,
-  UrlTree
+  UrlTree,
 } from '@angular/router';
 import { AuthState } from '@core/authentication/auth.state';
 import { Observable, Subscriber } from 'rxjs';

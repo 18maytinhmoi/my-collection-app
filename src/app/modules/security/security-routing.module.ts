@@ -5,17 +5,13 @@ const routes: Routes = [
   {
     path: 'sign-in',
     loadComponent: () =>
-      import('./containers/sign-in/sign-in.component').then(
-        m => m.SignInComponent
-      ),
+      import('./containers/sign-in/sign-in.component').then(m => m.SignInComponent),
   },
 
   {
     path: 'sign-up',
     loadComponent: () =>
-      import('./containers/sign-up/sign-up.component').then(
-        m => m.SignUpComponent
-      ),
+      import('./containers/sign-up/sign-up.component').then(m => m.SignUpComponent),
   },
 ];
 

@@ -87,9 +87,7 @@ export class PadIconComponent implements OnChanges {
 
   private _setSvgElementAttribute(svgElement: SVGElement) {
     if (this.strokeWidth) {
-      svgElement.style.strokeWidth = this._coerceCssPixelValue(
-        this.strokeWidth
-      );
+      svgElement.style.strokeWidth = this._coerceCssPixelValue(this.strokeWidth);
     }
     return svgElement;
   }
