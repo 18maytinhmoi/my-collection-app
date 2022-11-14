@@ -31,7 +31,6 @@ export class PadIconRegistry {
       map(content => this._svgElementFromString(content)),
       map(svgElement => this._setSvgElementAttributes(svgElement)),
       tap(svgElement => this._icons.set(key, svgElement)),
-      tap(() => console.log(this._icons)),
       catchError((error: HttpErrorResponse) => {
         const url = '';
         const message = `Loading icon set URL: ${url} failed: ${error.message}`;
