@@ -1,1 +1,123 @@
-<p>bookmark-management works!</p>
+<div class="w-screen h-screen flex justify-center items-center bg-black">
+  <div class="bg-white rounded-xl w-[688px]">
+    <div class="p-6 flex gap-4 border-b border-gray-200">
+      <div
+        class="w-12 h-12 rounded-[10px] border border-[#EAECF0] flex items-center justify-center">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M13 11H17.8C18.9201 11 19.4802 11 19.908 11.218C20.2843 11.4097 20.5903 11.7157 20.782 12.092C21 12.5198 21 13.0799 21 14.2V21M13 21V6.2C13 5.0799 13 4.51984 12.782 4.09202C12.5903 3.71569 12.2843 3.40973 11.908 3.21799C11.4802 3 10.9201 3 9.8 3H6.2C5.0799 3 4.51984 3 4.09202 3.21799C3.71569 3.40973 3.40973 3.71569 3.21799 4.09202C3 4.51984 3 5.0799 3 6.2V21M22 21H2M6.5 7H9.5M6.5 11H9.5M6.5 15H9.5"
+            stroke="black"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <p class="font-semibold text-lg text-gray-900">Add your company</p>
+        <p class="text-sm text-gray-600">
+          Create your company profile for free in less than 5 minutes
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-col pt-5 pb-8 px-6 gap-4">
+      <div class="flex gap-8">
+        <p class="text-sm text-gray-700 w-40 font-medium flex-none">Company name*</p>
+        <input
+          class="grow px-[14px] h-11 box-border rounded-lg shadow-sm border border-gray-300"
+          type="text"
+          placeholder="e.g Linear" />
+      </div>
+
+      <div class="flex gap-8">
+        <p class="text-sm text-gray-700 w-40 font-medium flex-none">Website URL*</p>
+        <input
+          class="grow px-[14px] h-11 box-border rounded-lg shadow-sm border border-gray-300"
+          type="text"
+          placeholder="www.example.com" />
+      </div>
+
+      <div class="w-full border-b border-gray-200"></div>
+
+      <div class="flex gap-8">
+        <p class="text-sm text-gray-700 w-40 font-medium flex-none">Profile image*</p>
+        <div class="flex grow gap-5">
+          <div
+            class="w-16 h-16 bg-gray-200 rounded-full flex justify-center items-center flex-none">
+            <div class="w-8 h-8">
+              <svg
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 1024 1024">
+                <title></title>
+                <g id="icomoon-ignore"></g>
+                <path
+                  fill="none"
+                  stroke-linejoin="round"
+                  stroke-linecap="round"
+                  stroke-miterlimit="4"
+                  stroke-width="85.3333"
+                  stroke="#000"
+                  d="M533.333 128h-200.533c-71.687 0-107.53 0-134.911 13.951-24.085 12.272-43.666 31.853-55.938 55.938-13.951 27.38-13.951 63.224-13.951 134.911v358.4c0 71.689 0 107.529 13.951 134.912 12.272 24.085 31.853 43.665 55.938 55.936 27.38 13.952 63.224 13.952 134.911 13.952h392.533c39.68 0 59.52 0 75.797-4.361 44.169-11.836 78.673-46.34 90.509-90.509 4.361-16.277 4.361-36.117 4.361-75.797M810.667 341.333v-256M682.667 213.333h256M448 362.667c0 47.128-38.205 85.333-85.333 85.333s-85.333-38.205-85.333-85.333c0-47.128 38.205-85.333 85.333-85.333s85.333 38.205 85.333 85.333zM639.573 508.506l-360.911 328.102c-20.3 18.458-30.45 27.682-31.348 35.678-0.778 6.929 1.878 13.798 7.115 18.402 6.041 5.312 19.759 5.312 47.194 5.312h400.5c61.402 0 92.105 0 116.22-10.317 30.272-12.949 54.391-37.069 67.341-67.341 10.317-24.115 10.317-54.818 10.317-116.22 0-20.663 0-30.993-2.257-40.61-2.842-12.092-8.282-23.415-15.949-33.186-6.101-7.774-14.17-14.229-30.302-27.132l-119.351-95.479c-16.145-12.919-24.218-19.379-33.109-21.658-7.838-2.010-16.081-1.749-23.778 0.751-8.73 2.833-16.38 9.788-31.68 23.697z"></path>
+              </svg>
+            </div>
+          </div>
+
+          <div
+            class="grow flex flex-col items-center justify-center gap-1 py-4 px-6 rounded-xl border border-gray-200">
+            <p class="text-sm text-gray-600">
+              <span class="font-semibold text-[#6941C6]">Click to upload</span> or drag
+              and drop
+            </p>
+            <p class="text-xs leading-[18px] text-gray-600">
+              SVG, PNG, JPG or GIF (max. 800x400px)
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full border-b border-gray-200"></div>
+
+      <div class="flex gap-8">
+        <p class="text-sm text-gray-700 w-40 font-medium flex-none">Username*</p>
+        <input
+          class="grow px-[14px] h-11 box-border rounded-lg shadow-sm border border-gray-300"
+          type="text" />
+      </div>
+
+      <div class="flex gap-8">
+        <p class="text-sm text-gray-700 w-40 font-medium flex-none">Keywords*</p>
+        <textarea
+          class="grow px-[14px] min-h-[80px] py-[12px] box-border rounded-lg shadow-sm border border-gray-300"
+          type="text"
+          placeholder="Add 1-10 keywords that help users find your company. For example, B2B, SaaS, design..."></textarea>
+      </div>
+
+      <div class="flex gap-8">
+        <p class="text-sm text-gray-700 w-40 font-medium flex-none">Description*</p>
+        <textarea
+          class="grow px-[14px] min-h-[80px] py-[12px] box-border rounded-lg shadow-sm border border-gray-300"
+          type="text"
+          placeholder="Write a few sentences about the company"></textarea>
+      </div>
+    </div>
+
+    <div class="p-6 flex gap-3 border-t border-gray-200">
+      <div class="grow py-[10px] shadow-sm border border-gray-300 text-center rounded-lg">
+        <p class="font-semibold text-gray-700">Cancel</p>
+      </div>
+      <div class="grow py-[10px] shadow-sm border border-[#7F56D9] bg-[#7F56D9] text-center rounded-lg">
+        <p class="font-semibold text-white">Add company</p>
+
+      </div>
+    </div>
+  </div>
+</div>

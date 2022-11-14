@@ -25,7 +25,7 @@
         <ul class="flex flex-col">
           <ng-container *ngFor="let item of vm.navCollectionItems">
             <app-nav-collection-item
-              (click)="onNavItemClick(item.key)"
+              (click)="onNavItemClick(item.link)"
               [value]="item"></app-nav-collection-item>
           </ng-container>
         </ul>

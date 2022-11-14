@@ -9,7 +9,7 @@ import { AuthState } from './auth.state';
   providedIn: 'root',
 })
 export class AuthService implements OnDestroy {
-  public allowPaths = ['sign-in', 'sign-up'];
+  // public allowPaths = ['sign-in', 'sign-up'];
   private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
@@ -25,27 +25,17 @@ export class AuthService implements OnDestroy {
           .get(firebaseUser.uid)
           .pipe(
             tap(data => (this._authState.user = data)),
-            tap(() =>
-              this._ngZone.run(() => {
-                this._router.navigate(['/']);
-              })
-            ),
+            // tap(() =>
+            //   this._ngZone.run(() => {
+            //     this._router.navigate(['/']);
+            //   })
+            // ),
             takeUntil(this._destroy)
           )
           .subscribe();
       } else {
-        const url = this._router.url;
-        if (!this.allowPaths.some(path => url.includes(path))) {
-          this.clear();
-        }
+        this._authState.reset();
       }
-    });
-  }
-
-  clear() {
-    this._authState.reset();
-    this._ngZone.run(() => {
-      this._router.navigate(['sign-in']);
     });
   }
 

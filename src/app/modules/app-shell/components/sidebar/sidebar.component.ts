@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserEntity } from '@core/models/entities/user.entity';
 import { BaseComponent } from '@core/services/base.components';
 import { BehaviorSubject, combineLatest, map } from 'rxjs';
@@ -40,33 +41,40 @@ export class SidebarComponent extends BaseComponent<ViewModel> implements OnInit
       link: '',
     },
   ];
-  selectedItemKeySubject!: BehaviorSubject<string | symbol | undefined>;
-  constructor(private readonly appShellFacade: AppShellFacade) {
+  selectedItemLinkSubject!: BehaviorSubject<string>;
+  constructor(
+    private readonly _router: Router,
+    private readonly appShellFacade: AppShellFacade
+  ) {
     super();
   }
 
   ngOnInit(): void {
-    this.selectedItemKeySubject = new BehaviorSubject<string | symbol | undefined>(
-      undefined
-    );
+    const url = this._router.url;
+    this.selectedItemLinkSubject = new BehaviorSubject<string>(url);
 
     const user$ = this.appShellFacade
       .userProfile()
       .pipe(map(user => (vm: ViewModel) => ({ ...vm, user })));
 
     const navCollectionItems$ = combineLatest([
-      this.selectedItemKeySubject.asObservable(),
+      this.selectedItemLinkSubject.asObservable(),
       this.appShellFacade.getCollections(),
     ]).pipe(
-      map(([key, data]) => {
-        return data.map(item => ({
-          key: item.id,
-          text: item.name,
-          iconKey: item.iconKey,
-          link: `bookmark/${item.id}`,
-          active: item.id === key,
-        }));
-      }),
+      map(([link, data]) =>
+        data.map(item => {
+          const paths = link.split('/');
+          const active = link.includes('bookmark') && paths[paths.length - 1] === item.id;
+
+          return {
+            key: item.id,
+            text: item.name,
+            iconKey: item.iconKey,
+            link: `bookmark/${item.id}`,
+            active,
+          };
+        })
+      ),
       map(navCollectionItems => (vm: ViewModel) => ({ ...vm, navCollectionItems }))
     );
 
@@ -77,8 +85,8 @@ export class SidebarComponent extends BaseComponent<ViewModel> implements OnInit
     });
   }
 
-  onNavItemClick(key: string | symbol) {
-    this.selectedItemKeySubject.next(key);
+  onNavItemClick(link: string) {
+    this.selectedItemLinkSubject.next(link);
   }
 
   logout() {
