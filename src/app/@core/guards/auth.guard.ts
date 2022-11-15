@@ -4,10 +4,10 @@ import {
   CanActivate,
   Router,
   RouterStateSnapshot,
-  UrlTree,
+  UrlTree
 } from '@angular/router';
 import { AuthState } from '@core/authentication/auth.state';
-import { Observable, Subscriber } from 'rxjs';
+import { Observable, skip, Subscriber } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +20,8 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return new Observable<boolean>((subscriber: Subscriber<boolean>) => {
-      this._authState.user$.subscribe(user => {
-        if (user) {
+      this._authState.loggedIn$.pipe(skip(1)).subscribe(loggedIn => {
+        if (loggedIn) {
           // this._loadingFacade.setLoading(false);
           subscriber.next(true);
           subscriber.complete();

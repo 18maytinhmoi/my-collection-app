@@ -11,7 +11,6 @@ export class BookmarkManagementComponent {
     // const ref = this.dialog.open(ExampleComponent, {
     //   data: { message: 'I am a dynamic component inside of a dialog!' },
     // });
-
     // ref.afterClosed$.subscribe(result => {
     //   console.log('Dialog closed', result);
     // });

@@ -44,8 +44,10 @@
       </div>
     </div>
 
-    <div class="p-2 border-[rgba(0,0,0,0.13)] border-t flex items-center justify-between">
-      <div class="flex items-center gap-3">
+    <div
+      (click)="openUserDropDown = !openUserDropDown"
+      class="p-2 border-[rgba(0,0,0,0.13)] border-t flex items-center justify-between relative">
+      <div class="flex items-center gap-3 cursor-pointer">
         <div class="w-10 h-10 rounded-lg bg-black"></div>
 
         <div class="flex flex-col">
@@ -56,12 +58,55 @@
         </div>
       </div>
 
-      <div class="cursor-pointer" (click)="logout()">
-        <pad-icon
-          key="log-out"
-          width="1.25rem"
-          height="1.25rem"
-          class="stroke-gray-500"></pad-icon>
+      <div
+        *ngIf="openUserDropDown"
+        class="absolute w-60 -right-full -top-60 rounded-lg border border-gray-200 bg-white shadow-lg">
+        <ul class="flex flex-col py-1">
+          <li class="h-[42px] flex items-center px-4 gap-2">
+            <pad-icon class="stroke-gray-700" key="user" [size]="GroupIcon.md"></pad-icon>
+            <p class="text-sm font-medium text-gray-700">View profile</p>
+          </li>
+
+          <li class="h-[42px] flex items-center px-4 gap-2">
+            <pad-icon
+              class="stroke-gray-700"
+              key="settings"
+              [size]="GroupIcon.md"></pad-icon>
+            <p class="text-sm font-medium text-gray-700">Setting</p>
+          </li>
+
+          <li class="h-[42px] flex items-center px-4 gap-2">
+            <pad-icon class="stroke-gray-700" key="zap" [size]="GroupIcon.md"></pad-icon>
+            <p class="text-sm font-medium text-gray-700">Keyboard shortcuts</p>
+          </li>
+        </ul>
+
+        <ul class="flex flex-col py-1 border-t border-gray-200">
+          <li class="h-[42px] flex items-center px-4 gap-2">
+            <pad-icon class="stroke-gray-700" key="lock" [size]="GroupIcon.md"></pad-icon>
+            <p class="text-sm font-medium text-gray-700">Change password</p>
+          </li>
+
+          <li class="h-[42px] flex items-center px-4 gap-2">
+            <pad-icon
+              class="stroke-gray-700"
+              key="help-circle"
+              [size]="GroupIcon.md"></pad-icon>
+            <p class="text-sm font-medium text-gray-700">Support</p>
+          </li>
+        </ul>
+
+        <ul class="border-t border-gray-200">
+          <li
+            (click)="logout()"
+            class="h-[50px] flex items-center px-4 gap-2 cursor-pointer">
+            <pad-icon
+              class="stroke-gray-700"
+              key="log-out"
+              [size]="GroupIcon.md"></pad-icon>
+            <p class="text-sm font-medium text-gray-700">Log out</p>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

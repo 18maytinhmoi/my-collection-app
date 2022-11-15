@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserEntity } from '@core/models/entities/user.entity';
 import { BaseComponent } from '@core/services/base.components';
+import { GroupIconSizePropertyName } from '@ui/icon/type';
 import { BehaviorSubject, combineLatest, map } from 'rxjs';
 import { AppShellFacade } from '../../app-shell.facade';
 import { NavItem } from '../../models/type';
@@ -42,6 +43,9 @@ export class SidebarComponent extends BaseComponent<ViewModel> implements OnInit
     },
   ];
   selectedItemLinkSubject!: BehaviorSubject<string>;
+  openUserDropDown = false;
+  GroupIcon = GroupIconSizePropertyName;
+
   constructor(
     private readonly _router: Router,
     private readonly appShellFacade: AppShellFacade

@@ -4,11 +4,7 @@
     (submitted$ | async) ||
     (inputs?.first?.formControl?.touched && inputs?.first?.formControl?.errors)
   ">
-  <li
-    *ngFor="
-      let child of inputs?.first?.formControl?.errors | formInputErrors;
-      trackBy: tracker
-    ">
-    {{ child }}
+  <li>
+    {{ (inputs.first.formControl.errors | formInputErrors)[0] }}
   </li>
 </ul>
