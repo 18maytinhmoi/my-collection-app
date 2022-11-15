@@ -52,13 +52,11 @@ export class SecurityFacade {
       lastName: dto.lastName,
     };
 
-    const apiCall$ = this._authApi
-      .signUpWithEmail(dto.email, dto.password)
-      .pipe(
-        map(data => data.user.uid),
-        mergeMap(uid => this._userApi.create(uid, userDto)),
-        this._handleAfterAuthentication()
-      );
+    const apiCall$ = this._authApi.signUpWithEmail(dto.email, dto.password).pipe(
+      map(data => data.user.uid),
+      mergeMap(uid => this._userApi.create(uid, userDto)),
+      this._handleAfterAuthentication()
+    );
 
     return handleApiResponse(apiCall$, null, err => {
       const error = err as FirebaseError;

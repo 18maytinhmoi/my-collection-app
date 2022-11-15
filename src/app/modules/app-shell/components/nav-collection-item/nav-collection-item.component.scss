@@ -1,0 +1,9 @@
+.active {
+  @apply opacity-100 bg-[#ebebeb];
+  pad-icon {
+    @apply stroke-black;
+  }
+  p {
+    @apply text-black;
+  }
+}

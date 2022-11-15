@@ -1,10 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import {
-  addAsyncValidators,
-  CustomFormGroup,
-} from '@core/utils/add-async-validators';
+import { addAsyncValidators, CustomFormGroup } from '@core/utils/add-async-validators';
 import { PadButtonModule } from '@ui/button/button.module';
 import { PadFormFieldModule } from '@ui/form-field/form-field.module';
 import { PadIconModule } from '@ui/icon/icon.module';

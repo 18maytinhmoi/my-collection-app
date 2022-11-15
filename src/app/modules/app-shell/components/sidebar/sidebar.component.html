@@ -1,1 +1,68 @@
-<button (click)="logout()">logout</button>
+<ng-container *ngIf="vm$ | async as vm">
+  <div
+    class="w-[16.5rem] h-screen flex flex-col justify-between border-[rgba(0,0,0,0.13)] border-r">
+    <div class="flex flex-col p-4">
+      <div class="w-14 h-14 mb-4">
+        <img
+          class="w-full h-full"
+          src="../../../../../assets/images/logo.png"
+          alt="logo" />
+      </div>
+
+      <ul class="flex flex-col">
+        <ng-container *ngFor="let item of vm.navItems">
+          <app-nav-item [value]="item"> </app-nav-item>
+        </ng-container>
+      </ul>
+
+      <div class="w-full border-[rgba(0,0,0,0.13)] border-t my-5"></div>
+
+      <div class="flex flex-col">
+        <div class="px-3 mb-3">
+          <p class="text-sm font-semibold">Collections</p>
+        </div>
+
+        <ul class="flex flex-col">
+          <ng-container *ngFor="let item of vm.navCollectionItems">
+            <app-nav-collection-item
+              (click)="onNavItemClick(item.link)"
+              [value]="item"></app-nav-collection-item>
+          </ng-container>
+        </ul>
+
+        <div class="px-3 py-2">
+          <div
+            class="flex gap-2 px-3 py-2 border-2 border-gray-300 border-dashed hover:border-solid rounded-lg cursor-pointer">
+            <pad-icon
+              key="plus"
+              width="1.25rem"
+              height="1.25rem"
+              class="stroke-gray-500"></pad-icon>
+            <p class="text-gray-600 font-medium leading-5">New Collection</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-2 border-[rgba(0,0,0,0.13)] border-t flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-black"></div>
+
+        <div class="flex flex-col">
+          <p class="text-sm font-semibold leading-5 text-gray-700">
+            {{ vm.user?.lastName }}
+          </p>
+          <p class="text-sm text-gray-600">{{ vm.user?.email }}</p>
+        </div>
+      </div>
+
+      <div class="cursor-pointer" (click)="logout()">
+        <pad-icon
+          key="log-out"
+          width="1.25rem"
+          height="1.25rem"
+          class="stroke-gray-500"></pad-icon>
+      </div>
+    </div>
+  </div>
+</ng-container>

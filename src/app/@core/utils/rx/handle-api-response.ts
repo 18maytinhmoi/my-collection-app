@@ -6,9 +6,7 @@ import { handleApiError } from './handle-api-error';
 export function handleApiResponse<T>(
   api$: Observable<T>,
   initialValue: T,
-  errObsFactoryOrRethrow?:
-    | true
-    | ((err: unknown) => unknown | Observable<unknown>)
+  errObsFactoryOrRethrow?: true | ((err: unknown) => unknown | Observable<unknown>)
 ): Observable<ApiResponse<T>> {
   return api$.pipe(
     map(data => ({ status: ApiResponseStatus.Success, data, error: '' })),

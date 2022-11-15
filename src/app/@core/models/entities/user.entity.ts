@@ -1,6 +1,6 @@
 import { FIREBASE_COLLECTIONS } from '@shared/constants/collections';
 import { BaseEntity } from '../base.entity';
-import { UserDto } from './../dto/user.dto';
+import { UserDto } from '../dto/user.dto';
 
 export class UserEntity extends BaseEntity {
   private readonly _id: string;

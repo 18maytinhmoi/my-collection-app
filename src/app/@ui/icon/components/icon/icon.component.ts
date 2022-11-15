@@ -42,6 +42,7 @@ export class PadIconComponent implements OnChanges {
   constructor(
     private _elementRef: ElementRef<HTMLElement>,
     private _registry: PadIconRegistry,
+
     @Inject(PAD_ICON_CONFIG) customConfig: PadIconConfig
   ) {
     this._init = true;
@@ -62,6 +63,14 @@ export class PadIconComponent implements OnChanges {
       this._setIconSize(DEFAULT_CONFIG.defaultSize);
     }
 
+    if (width) {
+      this._setIconWidth(width.currentValue);
+    }
+
+    if (height) {
+      this._setIconHeight(height.currentValue);
+    }
+
     this._init = false;
   }
 
@@ -78,11 +87,19 @@ export class PadIconComponent implements OnChanges {
 
   private _setSvgElementAttribute(svgElement: SVGElement) {
     if (this.strokeWidth) {
-      svgElement.style.strokeWidth = this._coerceCssPixelValue(
-        this.strokeWidth
-      );
+      svgElement.style.strokeWidth = this._coerceCssPixelValue(this.strokeWidth);
     }
     return svgElement;
+  }
+
+  private _setIconWidth(width: string | number) {
+    const value = this._coerceCssPixelValue(width);
+    this.element.style.width = value;
+  }
+
+  private _setIconHeight(height: string | number) {
+    const value = this._coerceCssPixelValue(height);
+    this.element.style.height = value;
   }
 
   private _setIconSize(size: GroupIconSizePropertyName) {

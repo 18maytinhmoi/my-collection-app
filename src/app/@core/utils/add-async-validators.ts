@@ -31,17 +31,12 @@ export function addAsyncValidators<T extends FormGroup>(
   return new FormGroup(groupObj as GroupControl<T>) as T;
 }
 
-function createValidatorFn<T>(
-  key: string,
-  formType: new () => any
-): AsyncValidatorFn {
+function createValidatorFn<T>(key: string, formType: new () => any): AsyncValidatorFn {
   return (control: AbstractControl) => {
     const toValidate = new formType();
     toValidate[key] = control.value;
     return validate(toValidate).then((validationErrors: ValidationError[]) => {
-      const err = validationErrors.find(
-        (v: ValidationError) => v?.property === key
-      );
+      const err = validationErrors.find((v: ValidationError) => v?.property === key);
 
       return err
         ? ({

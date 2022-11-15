@@ -34,6 +34,4 @@ export const DEFAULT_CONFIG: PadIconConfig = {
   defaultSize: GroupIconSizePropertyName.lg,
 };
 
-export const PAD_ICON_CONFIG = new InjectionToken<PadIconConfig>(
-  'PAD_ICON_CONFIG'
-);
+export const PAD_ICON_CONFIG = new InjectionToken<PadIconConfig>('PAD_ICON_CONFIG');

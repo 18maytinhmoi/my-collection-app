@@ -1,9 +1,6 @@
 import { FirebaseError } from '@angular/fire/app';
 import { AuthErrorCodes } from '@angular/fire/auth';
-import {
-  AuthErrorKey,
-  AuthErrorMessages,
-} from '@core/models/firebase-auth-error';
+import { AuthErrorKey, AuthErrorMessages } from '@core/models/firebase-auth-error';
 
 export function getAuthErrorMessage(
   error: FirebaseError,
