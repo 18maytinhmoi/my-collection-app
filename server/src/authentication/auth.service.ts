@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { compare, genSalt, hash } from 'bcrypt';
 import { AuthConfig, InjectAuthConfig } from 'src/configs/auth.config';
 import { UserService } from 'src/modules/user/user.service';
-import { JwtPayload } from './JwtPayload';
+import { JwtPayload } from './jwt-payload';
 
 @Injectable()
 export class AuthService {
@@ -33,5 +34,22 @@ export class AuthService {
       accessToken,
       refreshToken,
     };
+  }
+
+  async validateUser(payload: JwtPayload) {
+    const user = await this._userService.findOne(payload.username);
+    if (user && user.email === payload.email) {
+      return user;
+    }
+    return null;
+  }
+
+  async hashPassword(password: string) {
+    const salt = await genSalt(this._authConfig.jwtSalt);
+    return await hash(password, salt);
+  }
+
+  async verify(password: string, encrypted: string) {
+    return await compare(password, encrypted);
   }
 }

@@ -1,1 +1,4 @@
-export class CreateUserDto {}
+import { BaseKeys } from 'src/common/entities/base.entity';
+import { UserEntity } from 'src/common/entities/user.entity';
+
+export type CreateUserDto = Omit<UserEntity, BaseKeys | 'role'>;
