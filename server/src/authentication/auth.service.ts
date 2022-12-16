@@ -1,8 +1,9 @@
+import { AuthConfig, InjectAuthConfig } from '@configs/index';
+import { UserService } from '@modules/user/user.service';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare, genSalt, hash } from 'bcrypt';
-import { AuthConfig, InjectAuthConfig } from 'src/configs/auth.config';
-import { UserService } from 'src/modules/user/user.service';
+
 import { JwtPayload } from './jwt-payload';
 
 @Injectable()
@@ -11,7 +12,7 @@ export class AuthService {
     @InjectAuthConfig()
     private readonly _authConfig: AuthConfig,
     private readonly _userService: UserService,
-    private readonly _jwtService: JwtService,
+    private readonly _jwtService: JwtService
   ) {}
 
   async getTokens(payload: JwtPayload) {
@@ -37,7 +38,7 @@ export class AuthService {
   }
 
   async validateUser(payload: JwtPayload) {
-    const user = await this._userService.findOne(payload.username);
+    const user = await this._userService.findByUsername(payload.username);
     if (user && user.email === payload.email) {
       return user;
     }

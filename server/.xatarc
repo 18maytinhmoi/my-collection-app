@@ -1,6 +1,0 @@
-{
-  "databaseURL": "https://18maytinhmoi-s-workspace-m5c9o7.us-east-1.xata.sh/db/my-collection-app",
-  "codegen": {
-    "output": "src/xata.ts"
-  }
-}
