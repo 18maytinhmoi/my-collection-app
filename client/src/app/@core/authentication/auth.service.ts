@@ -1,10 +1,11 @@
-import { Injectable, NgZone, OnDestroy } from '@angular/core';
-import { Auth, onAuthStateChanged } from '@angular/fire/auth';
-import { Router } from '@angular/router';
-import { UserApi } from '@core/api/user.api';
-import { ReplaySubject, takeUntil, tap } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { SignInDto, TokenDto } from '@core/models/dto';
+import { LocalStorageService } from '@core/services/local-storage.service';
+import { StorageKeys } from '@shared/constants/storage-keys';
+import { EMPTY, ReplaySubject, tap } from 'rxjs';
+import { AuthApi } from './auth.api';
+import { AuthStore } from './auth.store';
 
-import { AuthState } from './auth.state';
 @Injectable({
   providedIn: 'root',
 })
@@ -13,30 +14,41 @@ export class AuthService implements OnDestroy {
   private _destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
-    private readonly _ngZone: NgZone,
-    private readonly _router: Router,
-    private readonly _auth: Auth,
-    private readonly _authState: AuthState,
-    private readonly _userApi: UserApi
-  ) {
-    onAuthStateChanged(this._auth, firebaseUser => {
-      if (firebaseUser) {
-        this._userApi
-          .get(firebaseUser.uid)
-          .pipe(
-            tap(data => (this._authState.user = data)),
-            // tap(() =>
-            //   this._ngZone.run(() => {
-            //     this._router.navigate(['/']);
-            //   })
-            // ),
-            takeUntil(this._destroy)
-          )
-          .subscribe();
-      } else {
-        this._authState.reset();
-      }
-    });
+    private readonly storageService: LocalStorageService,
+    private readonly authStore: AuthStore,
+    private readonly authApi: AuthApi
+  ) {}
+
+  get token$() {
+    return this.authStore.token$;
+  }
+
+  get loggedIn$() {
+    return this.authStore.loggedIn$;
+  }
+
+  init() {
+    const token = this.storageService.getObject<TokenDto>(StorageKeys.token);
+    this.authStore.setState(token);
+  }
+
+  login(dto: SignInDto) {
+    return this.authApi.signIn(dto).pipe(
+      tap(token => this.authStore.setState(token)),
+      tap(token => this.storageService.setObject(StorageKeys.token, token))
+    );
+  }
+
+  refreshToken(refreshToken: string) {
+    return this.authApi
+      .refreshToken(refreshToken)
+      .pipe(tap(token => this.authStore.setState(token)));
+  }
+
+  logout() {
+    this.storageService.remove(StorageKeys.token);
+    this.authStore.setState(null);
+    return EMPTY;
   }
 
   ngOnDestroy() {

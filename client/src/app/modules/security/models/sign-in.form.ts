@@ -1,9 +1,10 @@
+import { SignInDto } from '@core/models/dto';
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 
-export class SignInForm {
+export class SignInForm implements SignInDto {
   @IsNotEmpty()
   @IsEmail()
-  public readonly email!: string;
+  public readonly username!: string;
 
   @IsNotEmpty()
   @MinLength(6)

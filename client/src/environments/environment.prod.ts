@@ -1,4 +1,5 @@
 export const environment = {
+  baseUrl: 'http://localhost:3000/api/',
   firebase: {
     projectId: 'my-collection-app-stg',
     appId: '1:193453845697:web:7315a98949d305cea1b840',

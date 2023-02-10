@@ -133,16 +133,6 @@
               "src/**/*.html"
             ]
           }
-        },
-        "deploy": {
-          "builder": "@angular/fire:deploy",
-          "options": {
-            "prerender": false,
-            "ssr": false,
-            "browserTarget": "my-collection-app:build:production",
-            "firebaseProject": "my-collection-app-stg",
-            "firebaseHostingSite": "my-collection-app-stg"
-          }
         }
       }
     }

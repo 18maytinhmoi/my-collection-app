@@ -1,5 +1,14 @@
-import { Entity, Enum, OptionalProps, Property, Unique } from '@mikro-orm/core';
+import {
+  Collection,
+  Entity,
+  Enum,
+  OneToMany,
+  OptionalProps,
+  Property,
+  Unique
+} from '@mikro-orm/core';
 import { BaseEntity } from '../utils/base.entity';
+import { CollectionEntity } from './collection.entity';
 
 export enum UserRole {
   User = 'user',
@@ -23,13 +32,16 @@ export class UserEntity extends BaseEntity {
   @Property()
   password: string;
 
-  @Property()
+  @Property({ nullable: true })
   @Unique()
-  email: string;
+  email?: string;
 
   @Property({ nullable: true })
   refreshToken?: string;
 
   @Enum({ items: () => UserRole, default: UserRole.User })
   role: UserRole;
+
+  @OneToMany(() => CollectionEntity, book => book.user)
+  collections = new Collection<CollectionEntity>(this);
 }

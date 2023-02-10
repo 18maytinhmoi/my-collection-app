@@ -1,9 +1,9 @@
 <pad-form-wrapper [formGroup]="signInForm" (submitted)="onSubmit()">
   <pad-form-field>
-    <pad-label>Email address</pad-label>
+    <pad-label>Username</pad-label>
     <input
       padInput
-      [formControl]="signInForm.controls.email"
+      [formControl]="signInForm.controls.username"
       class="w-96 h-12 border-2 border-[#DCE4EF] rounded-lg px-4"
       type="text" />
   </pad-form-field>

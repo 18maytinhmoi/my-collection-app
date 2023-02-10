@@ -4,35 +4,31 @@ import {
   CanActivate,
   Router,
   RouterStateSnapshot,
-  UrlTree
+  UrlTree,
 } from '@angular/router';
-import { AuthState } from '@core/authentication/auth.state';
-import { Observable, skip, Subscriber } from 'rxjs';
+import { AuthStore } from '@core/authentication/auth.store';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private readonly _router: Router, private readonly _authState: AuthState) {}
+  constructor(private readonly _router: Router, private readonly _authStore: AuthStore) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return new Observable<boolean>((subscriber: Subscriber<boolean>) => {
-      this._authState.loggedIn$.pipe(skip(1)).subscribe(loggedIn => {
-        if (loggedIn) {
-          // this._loadingFacade.setLoading(false);
-          subscriber.next(true);
-          subscriber.complete();
+    return this._authStore.loggedIn$.pipe(
+      map(isLoggedIn => {
+        if (isLoggedIn) {
+          return true;
         } else {
           this._router.navigate(['sign-in']);
-          // this._loadingFacade.setLoading(false);
-          subscriber.next(false);
-          subscriber.complete();
+          return false;
         }
-      });
-    });
+      })
+    );
 
     // return this.authState.loggedIn$;
   }

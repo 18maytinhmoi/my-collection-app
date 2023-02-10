@@ -8,7 +8,6 @@ import { NavCollectionItemComponent } from './components/nav-collection-item/nav
 import { NavItemComponent } from './components/nav-item/nav-item.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LayoutComponent } from './containers/layout/layout.component';
-import { CollectionApi } from './services/collection.api';
 import { CollectionState } from './services/collection.state';
 
 @NgModule({
@@ -18,7 +17,7 @@ import { CollectionState } from './services/collection.state';
     NavCollectionItemComponent,
     NavItemComponent,
   ],
-  providers: [AppShellFacade, CollectionApi, CollectionState],
+  providers: [AppShellFacade, CollectionState],
   imports: [
     CommonModule,
     AppShellRoutingModule,

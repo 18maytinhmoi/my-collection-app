@@ -1,31 +1,44 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  Auth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  UserCredential,
-} from '@angular/fire/auth';
-import { defer, from, Observable } from 'rxjs';
+import { SignInDto, SignUpDto, TokenDto } from '@core/models/dto';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthApi {
-  constructor(private readonly _auth: Auth) {}
+  baseUrl = environment.baseUrl + 'security/';
+  endPoints = {
+    register: () => 'register',
+    login: () => 'login',
+    refreshToken: () => 'refresh',
+  };
 
-  signIn(email: string, password: string): Observable<UserCredential> {
-    const promise = signInWithEmailAndPassword(this._auth, email, password);
-    return defer(() => from(promise));
+  constructor(private readonly _http: HttpClient) {
+    HttpParams;
   }
 
-  signUpWithEmail(email: string, password: string): Observable<UserCredential> {
-    const promise = createUserWithEmailAndPassword(this._auth, email, password);
-    return defer(() => from(promise));
+  signUp(dto: SignUpDto): Observable<TokenDto> {
+    const url = this.baseUrl + this.endPoints.register();
+    return this._http.post<TokenDto>(url, dto);
   }
 
-  logout(): Observable<void> {
-    const promise = signOut(this._auth);
-    return defer(() => from(promise));
+  signIn(dto: SignInDto): Observable<TokenDto> {
+    const url = this.baseUrl + this.endPoints.login();
+    return this._http.post<TokenDto>(url, dto);
   }
+
+  refreshToken(refreshToken: string): Observable<TokenDto> {
+    const url = this.baseUrl + this.endPoints.refreshToken();
+    const headers = new HttpHeaders();
+    headers.set('Authorization', `Bearer ${refreshToken}`);
+    return this._http.post<TokenDto>(url, null, { headers });
+  }
+
+  logout() {}
+  // logout(): Observable<void> {
+  //   const promise = signOut(this._auth);
+  //   return defer(() => from(promise));
+  // }
 }
